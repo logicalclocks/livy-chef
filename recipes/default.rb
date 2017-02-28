@@ -2,27 +2,27 @@
 include_recipe "hops::wrap"
 
 my_ip = my_private_ip()
-nn_endpoint = private_recipe_ip("apache_hadoop", "nn") + ":#{node.apache_hadoop.nn.port}"
-home = node.apache_hadoop.hdfs.user_home
+nn_endpoint = private_recipe_ip("hops", "nn") + ":#{node.hops.nn.port}"
+home = node.hops.hdfs.user_home
 
 
 livy_dir="#{home}/#{node.livy.user}/livy"
-apache_hadoop_hdfs_directory "#{livy_dir}" do
+hops_hdfs_directory "#{livy_dir}" do
   action :create_as_superuser
   owner node.livy.user
-  group node.apache_hadoop.group
+  group node.hops.group
   mode "1770"
-  not_if ". #{node.apache_hadoop.home}/sbin/set-env.sh && #{node.apache_hadoop.home}/bin/hdfs dfs -test -d #{livy_dir}"
+  not_if ". #{node.hops.home}/sbin/set-env.sh && #{node.hops.home}/bin/hdfs dfs -test -d #{livy_dir}"
 end
 
 tmp_dirs   = [ livy_dir, "#{livy_dir}/rsc-jars", "#{livy_dir}/rpl-jars" ] 
 for d in tmp_dirs
- apache_hadoop_hdfs_directory d do
+ hops_hdfs_directory d do
     action :create
     owner node.livy.user
-    group node.apache_hadoop.group
+    group node.hops.group
     mode "1777"
-    not_if ". #{node.apache_hadoop.home}/sbin/set-env.sh && #{node.apache_hadoop.home}/bin/hdfs dfs -test -d #{d}"
+    not_if ". #{node.hops.home}/sbin/set-env.sh && #{node.hops.home}/bin/hdfs dfs -test -d #{d}"
   end
 end
 

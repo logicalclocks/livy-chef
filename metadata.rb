@@ -12,7 +12,6 @@ source_url       "https://github.com/hopshadoop/livy-chef"
 depends          "hadoop_spark"
 depends          "ndb"
 depends          "hops"
-depends          "apache_hadoop"
 depends          "kagent"
 depends          "java"
 

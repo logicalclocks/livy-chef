@@ -1,7 +1,7 @@
 #!/bin/bash
 
 export SPARK_HOME=<%= node.hadoop_spark.base_dir %>
-export HADOOP_CONF_DIR=<%= node.apache_hadoop.base_dir %>/etc/hadoop/conf
+export HADOOP_CONF_DIR=<%= node.hops.base_dir %>/etc/hadoop/conf
 
 PID_FILE=<%= node.livy.pid_file %>
 if [ -f $PID_FILE ] ; then

@@ -158,6 +158,7 @@ bash "jupyter-hdfscontents" do
     code <<-EOF
     set -e
     export HADOOP_HOME=#{node[:hops][:base_dir]}
-    pip install hdfscontents
+    pip install pydoop
+    pip install 'hdfscontents>=0.4'
 EOF
 end

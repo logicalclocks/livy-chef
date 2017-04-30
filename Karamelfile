@@ -7,3 +7,5 @@ dependencies:
     global:  
       - hops::dn
       - hops::nm
+    local:
+      - kagent::default    

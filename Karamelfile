@@ -6,6 +6,5 @@ dependencies:
   - recipe: livy::default
     global:  
       - hops::dn
-      - hops::nm
     local:
       - kagent::default    

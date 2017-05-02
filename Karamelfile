@@ -1,8 +1,7 @@
 dependencies: 
   - recipe: livy::install
-    local:  
+    global:  
       - kagent::install
-      - hadoop_spark::install
   - recipe: livy::default
     global:  
       - hops::dn

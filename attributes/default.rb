@@ -3,7 +3,7 @@ include_attribute "kagent"
 default.livy.user                    = node.install.user.empty? ? node.hadoop_spark.user : node.install.user
 default.livy.group                   = node.install.user.empty? ? node.hadoop_spark.group : node.install.user
 
-default.livy.version                 = "0.3.0-SNAPSHOT"
+default.livy.version                 = "0.4.0-SNAPSHOT"
 default.livy.url                     = "#{node.download_url}/livy-server-#{node.livy.version}.zip"
 default.livy.port                    = "8998"
 default.livy.dir                     = node.install.dir.empty? ? "/srv" : node.install.dir

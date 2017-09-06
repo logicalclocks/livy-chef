@@ -1,10 +1,10 @@
 #!/bin/bash
 
-export SPARK_HOME=<%= node.hadoop_spark.base_dir %>
-export SPARK_CONF_DIR=<%= node.hadoop_spark.base_dir %>/conf
-export HADOOP_CONF_DIR=<%= node.hops.base_dir %>/etc/hadoop/conf
+export SPARK_HOME=<%= node['hadoop_spark']['base_dir'] %>
+export SPARK_CONF_DIR=<%= node['hadoop_spark']['base_dir'] %>/conf
+export HADOOP_CONF_DIR=<%= node['hops']['base_dir'] %>/etc/hadoop/conf
 
-PID_FILE=<%= node.livy.pid_file %>
+PID_FILE=<%= node['livy']['pid_file'] %>
 if [ -f $PID_FILE ] ; then
  PID=`cat $PID_FILE`
  kill -0 $PID 2>&1 > /dev/null
@@ -15,7 +15,7 @@ if [ -f $PID_FILE ] ; then
 fi
 
 
-nohup <%= node.livy.base_dir %>/bin/livy-server  2>&1 > <%= node.livy.log %> &
+nohup <%= node['livy']['base_dir'] %>/bin/livy-server  2>&1 > <%= node['livy']['log'] %> &
 echo $! > $PID_FILE
 
 PID=`cat $PID_FILE`

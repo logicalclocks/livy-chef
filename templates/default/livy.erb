@@ -15,9 +15,9 @@
 
 # Variables
 
-START_PROG="<%= node.livy.base_dir %>/bin/start-livy.sh"  
-STOP_PROG="<%= node.livy.base_dir %>/bin/stop-livy.sh"  
-EXEC_WITH_USER="su <%= node.livy.user %> -c"
+START_PROG="<%= node['livy']['base_dir'] %>/bin/start-livy.sh"  
+STOP_PROG="<%= node['livy']['base_dir'] %>/bin/stop-livy.sh"  
+EXEC_WITH_USER="su <%= node['livy']['user'] %> -c"
 
 start() {
   ulimit -n 65000 2>&1 > /dev/null
@@ -32,7 +32,7 @@ stop() {
 
 status() {
   res=1
-  PID_FILE=<%= node.livy.pid_file %>
+  PID_FILE=<%= node['livy']['pid_file'] %>
   if [ -f $PID_FILE ] ; then
      PID=`cat $PID_FILE`
      kill -0 $PID

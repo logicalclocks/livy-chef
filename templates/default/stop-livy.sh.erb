@@ -1,6 +1,6 @@
 #!/bin/bash
 
-PID_FILE=<%= node.livy.pid_file %>
+PID_FILE=<%= node['livy']['pid_file'] %>
 
 function kill_named {
     PID=`ps aux | grep -i livy | grep -v grep | grep -v chef | awk 'NR==1{print $2}'`

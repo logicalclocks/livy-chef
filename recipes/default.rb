@@ -160,12 +160,3 @@ bash "sparkmagic-support-user" do
     pip install --upgrade --user sparkmagic
 EOF
 end
-
-
-hops_hdfs_directory "#{livy_dir}/webserver_logs" do
-  action :create_as_superuser
-  owner node['livy']['user']
-  group node['livy']['group']
-  mode "1750"
-end
-

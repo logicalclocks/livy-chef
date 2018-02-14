@@ -2,7 +2,7 @@
 
 export SPARK_HOME=<%= node['hadoop_spark']['base_dir'] %>
 export SPARK_CONF_DIR=<%= node['hadoop_spark']['base_dir'] %>/conf
-export HADOOP_CONF_DIR=<%= node['hops']['base_dir'] %>/etc/hadoop/conf
+export HADOOP_CONF_DIR=<%= node['hops']['conf_dir'] %>
 
 PID_FILE=<%= node['livy']['pid_file'] %>
 if [ -f $PID_FILE ] ; then

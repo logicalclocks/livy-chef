@@ -3,11 +3,11 @@ Description=Livy server
 After=syslog.target network.target remote-fs.target
 
 [Service]
-User = <%= node.livy.user %>
+User = <%= node['livy']['user'] %>
 
-PIDFile=<%= node.livy.pid_file %>
-ExecStart=<%= node.livy.base_dir %>/bin/start-livy.sh
-ExecStop=<%= node.livy.base_dir %>/bin/stop-livy.sh
+PIDFile=<%= node['livy']['pid_file'] %>
+ExecStart=<%= node['livy']['base_dir'] %>/bin/start-livy.sh
+ExecStop=<%= node['livy']['base_dir'] %>/bin/stop-livy.sh
 LimitNOFILE=20000
 
 Type=forking

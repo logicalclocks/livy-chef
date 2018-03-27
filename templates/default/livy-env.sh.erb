@@ -20,10 +20,10 @@
 #
 # - JAVA_HOME       Java runtime to use. By default use "java" from PATH.
 # Directory containing the Hadoop / YARN configuration to use.
-HADOOP_CONF_DIR=<%= node.hops.base_dir %>/etc/hadoop
+HADOOP_CONF_DIR=<%= node['hops']['base_dir'] %>/etc/hadoop
 
 # - SPARK_HOME      Spark which you would like to use in Livy.
-SPARK_HOME=<%= node.hadoop_spark.base_dir %>
+SPARK_HOME=<%= node['hadoop_spark']['base_dir'] %>
 
 # - SPARK_CONF_DIR  Optional directory where the Spark configuration lives.
 #                   (Default: $SPARK_HOME/conf)

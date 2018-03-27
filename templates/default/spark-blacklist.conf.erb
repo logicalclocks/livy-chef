@@ -8,7 +8,8 @@
 
 # Disallow overriding the master and the deploy mode.
 spark.master
-spark.submit.deployMode
+#Commented out so that it can be set by Hopsworks in the interpreter.json
+#spark.submit.deployMode
 
 # Disallow overriding the location of Spark cached jars.
 spark.yarn.jar

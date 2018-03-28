@@ -7,8 +7,8 @@ default['livy']['version']                 = "0.5.0-incubating-bin"
 default['livy']['url']                     = "#{node['download_url']}/livy-#{node['livy']['version']}.zip"
 default['livy']['port']                    = "8998"
 default['livy']['dir']                     = node['install']['dir'].empty? ? "/srv" : node['install']['dir']
-default['livy']['home']                    = node['livy']['dir'] + "/livy-server-" + node['livy']['version']
-default['livy']['base_dir']                = node['livy']['dir'] + "/livy-server" 
+default['livy']['home']                    = node['livy']['dir'] + "/livy-" + node['livy']['version']
+default['livy']['base_dir']                = node['livy']['dir'] + "/livy" 
 default['livy']['keystore']                = "#{node['kagent']['certs_dir']}/keystores/#{node['hostname']}__kstore.jks"
 default['livy']['keystore_password']       = node['hopsworks']['master']['password']
 

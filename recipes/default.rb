@@ -134,11 +134,10 @@ if node['kagent']['enabled'] == "true"
 end
 
 
+# Upgrade will have a restart for free...
 livy_restart "restart-livy-needed" do
   action :restart
 end
-
-
 
 
 bash "jupyter-hdfscontents" do
@@ -160,3 +159,4 @@ bash "sparkmagic-support-user" do
     pip install --upgrade --user sparkmagic
 EOF
 end
+

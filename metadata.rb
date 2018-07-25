@@ -74,3 +74,11 @@ attribute "install/dir",
 attribute "install/user",
           :description => "User to install the services as",
           :type => "string"
+
+attribute "livy/log",
+          :dscription => "Path to livy log-file from log4j",
+          :type => "string"
+
+attribute "livy/log_size",
+          :dscription => "Max size of logfile. Default: '20MB' ",
+          :type => "string"

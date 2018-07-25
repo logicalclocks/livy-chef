@@ -33,6 +33,13 @@ template "#{node['livy']['base_dir']}/conf/livy.conf" do
            })
 end
 
+template "#{node['livy']['base_dir']}/conf/log4j.properties" do
+  source "log4j.properties.erb"
+  owner node['livy']['user']
+  group node['livy']['group']
+  mode 0655
+end
+
 
 template "#{node['livy']['base_dir']}/conf/spark-blacklist.conf" do
   source "spark-blacklist.conf.erb"
@@ -129,7 +136,7 @@ end
 if node['kagent']['enabled'] == "true"
    kagent_config service_name do
      service service_name
-     log_file node['livy']['log']
+     log_file node['livy']['log'] 
    end
 end
 

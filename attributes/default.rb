@@ -13,6 +13,7 @@ default['livy']['keystore']                = "#{node['kagent']['certs_dir']}/key
 default['livy']['keystore_password']       = node['hopsworks']['master']['password']
 
 default['livy']['pid_file']                = "/tmp/livy.pid"
-default['livy']['log']                     = "#{node['livy']['base_dir']}/livy.log"
+default['livy']['log']                     = "#{node['livy']['base_dir']}/logs/livy-logfile.log"
+default['livy']['log_size']                = "20MB"
 
 default['livy']['systemd']                 = "true"

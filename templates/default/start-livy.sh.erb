@@ -15,7 +15,7 @@ if [ -f $PID_FILE ] ; then
 fi
 
 
-nohup <%= node['livy']['base_dir'] %>/bin/livy-server  2>&1 > <%= node['livy']['log'] %> &
+nohup <%= node['livy']['base_dir'] %>/bin/livy-server  2>&1 >> <%= node['livy']['log'] %> &
 echo $! > $PID_FILE
 
 PID=`cat $PID_FILE`

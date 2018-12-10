@@ -136,7 +136,7 @@ end
 if node['kagent']['enabled'] == "true"
    kagent_config service_name do
      service service_name
-     log_file node['livy']['log'] 
+     log_file node['livy']['log']
    end
 end
 
@@ -145,25 +145,3 @@ end
 livy_restart "restart-livy-needed" do
   action :restart
 end
-
-
-bash "jupyter-hdfscontents" do
-    user "root"
-    code <<-EOF
-    set -e
-    export HADOOP_HOME=#{node['hops']['base_dir']}
-    export HADOOP_CONF_DIR=#{node['hops']['base_dir']}/etc/hadoop
-    pip install pydoop
-    pip install hdfscontents --upgrade
-EOF
-end
-
-
-bash "sparkmagic-support-user" do
-    user node['livy']['user']
-    ignore_failure true
-    code <<-EOF
-    pip install --upgrade --user sparkmagic
-EOF
-end
-

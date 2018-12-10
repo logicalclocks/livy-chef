@@ -52,8 +52,7 @@ remote_file cached_package_filename do
 end
 
 
-package "unzip" do
-end
+package "unzip"
 
 # Extract Livy
 livy_downloaded = "#{node['livy']['home']}/.livy_extracted_#{node['livy']['version']}"

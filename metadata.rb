@@ -19,14 +19,6 @@ recipe           "install", "Installs a Livy Spark REST Server"
 recipe           "default", "Starts  a Livy Spark REST Server"
 recipe           "purge", "Removes and deletes an installed Livy Spark REST Server"
 
-attribute "java/jdk_version",
-          :description =>  "Jdk version",
-          :type => 'string'
-
-attribute "java/install_flavor",
-          :description =>  "Oracle (default) or openjdk",
-          :type => 'string'
-
 attribute "livy/user",
           :description => "User to install/run as",
           :type => 'string'

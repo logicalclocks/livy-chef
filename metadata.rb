@@ -74,3 +74,12 @@ attribute "livy/log",
 attribute "livy/log_size",
           :dscription => "Max size of logfile. Default: '20MB' ",
           :type => "string"
+
+attribute "livy/rsc/rpc/max/size",
+          :dscription => "Max size of rpc. Default: '256MB' ",
+          :type => "string"
+
+attribute "livy/rpc/max/size",
+          :dscription => "Max size of rpc. Default: '256MB' ",
+          :type => "string"
+

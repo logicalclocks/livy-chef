@@ -17,3 +17,5 @@ default['livy']['log']                     = "#{node['livy']['base_dir']}/logs/l
 default['livy']['log_size']                = "20MB"
 
 default['livy']['systemd']                 = "true"
+default['livy']['rsc']['rpc']['max']['size'] =  "268435456"
+default['livy']['rpc']['max']['size'] =  "268435456"

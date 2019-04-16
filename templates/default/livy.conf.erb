@@ -21,7 +21,7 @@ livy.server.session.timeout = 8600000000
 # If livy should impersonate the requesting users when creating a new session.
 livy.impersonation.enabled = true
 
-livy.server.csrf_protection.enabled = false
+livy.server.csrf-protection.enabled = false
 
 # Comma-separated list of Livy RSC jars. By default Livy will upload jars from its installation
 # directory every time a session is started. By caching these files in HDFS, for example, startup
@@ -52,7 +52,7 @@ livy.server.recovery.state-store=filesystem
 
 livy.server.recovery.state-store.url = file://<%= node['livy']['base_dir'] %>/logs
 
-livy.repl.enableHiveContext = true
+livy.repl.enable-hive-context = true
 
 #RPC size properties, for large installations it might have to be further increased. Set default to 256MB
 livy.rsc.rpc.max.size= <%= node['livy']['rsc']['rpc']['max']['size'] %>

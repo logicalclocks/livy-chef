@@ -4,16 +4,16 @@ default['livy']['user']                    = node['install']['user'].empty? ? "l
 default['livy']['group']                   = node['install']['user'].empty? ? node['hadoop_spark']['group'] : node['install']['user']
 
 default['livy']['version']                 = "0.6.1.0-bin"
-default['livy']['url']                     = "#{node['download_url']}/livy-#{node['livy']['version']}.zip"
+default['livy']['url']                     = "#{node['download_url']}/apache-livy-#{node['livy']['version']}.zip"
 default['livy']['port']                    = "8998"
 default['livy']['dir']                     = node['install']['dir'].empty? ? "/srv" : node['install']['dir']
-default['livy']['home']                    = node['livy']['dir'] + "/livy-" + node['livy']['version']
-default['livy']['base_dir']                = node['livy']['dir'] + "/livy"
+default['livy']['home']                    = node['livy']['dir'] + "/apache-livy-" + node['livy']['version']
+default['livy']['base_dir']                = node['livy']['dir'] + "/apache-livy"
 default['livy']['keystore']                = "#{node['kagent']['certs_dir']}/keystores/#{node['hostname']}__kstore.jks"
 default['livy']['keystore_password']       = node['hopsworks']['master']['password']
 
-default['livy']['pid_file']                = "/tmp/livy.pid"
-default['livy']['log']                     = "#{node['livy']['base_dir']}/logs/livy-logfile.log"
+default['livy']['pid_file']                = "/tmp/apache-livy.pid"
+default['livy']['log']                     = "#{node['livy']['base_dir']}/logs/apache-livy-logfile.log"
 default['livy']['log_size']                = "20MB"
 
 default['livy']['systemd']                 = "true"

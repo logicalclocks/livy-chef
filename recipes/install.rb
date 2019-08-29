@@ -76,6 +76,25 @@ bash 'extract-livy' do
      not_if { ::File.exists?( "#{livy_downloaded}" ) }
 end
 
+bash 'link-jars' do
+        user "root"
+        group node['livy']['group']
+        code <<-EOH
+                rm -f #{node['livy']['base_dir']}/rsc-jars/livy-api.jar
+                rm -f #{node['livy']['base_dir']}/rsc-jars/livy-rsc.jar
+                rm -f #{node['livy']['base_dir']}/rsc-jars/netty-all.jar
+                ln -s #{node['livy']['base_dir']}/rsc-jars/livy-api-*.jar #{node['livy']['base_dir']}/rsc-jars/livy-api.jar
+                ln -s #{node['livy']['base_dir']}/rsc-jars/livy-rsc-*jar #{node['livy']['base_dir']}/rsc-jars/livy-rsc.jar
+                ln -s #{node['livy']['base_dir']}/rsc-jars/netty-all-*.jar #{node['livy']['base_dir']}/rsc-jars/netty-all.jar
+                rm -f #{node['livy']['base_dir']}/repl_2.11-jars/commons-codec.jar
+                rm -f #{node['livy']['base_dir']}/repl_2.11-jars/livy-core.jar
+                rm -f #{node['livy']['base_dir']}/repl_2.11-jars/livy-repl.jar
+                ln -s #{node['livy']['base_dir']}/repl_2.11-jars/commons-codec-*.jar #{node['livy']['base_dir']}/repl_2.11-jars/commons-codec.jar
+                ln -s #{node['livy']['base_dir']}/repl_2.11-jars/livy-core_*.jar #{node['livy']['base_dir']}/repl_2.11-jars/livy-core.jar
+                ln -s #{node['livy']['base_dir']}/repl_2.11-jars/livy-repl_*.jar #{node['livy']['base_dir']}/repl_2.11-jars/livy-repl.jar
+        EOH
+end
+
 directory "#{node['livy']['home']}/logs" do
   owner node['livy']['user']
   group node['livy']['group']

@@ -31,7 +31,7 @@ livy.rsc.jars = local://<%= node['livy']['base_dir'] %>/rsc-jars/livy-api.jar,lo
 # Comma-separated list of Livy REPL jars. By default Livy will upload jars from its installation
 # directory every time a session is started. By caching these files in HDFS, for example, startup
 # time of sessions on YARN can be reduced.
-livy.repl.jars = local://<%= node['livy']['base_dir'] %>repl_2.11-jars/commons-codec.jar,local://<%= node['livy']['base_dir'] %>/repl_2.11-jars/livy-core.jar,local://<%= node['livy']['base_dir'] %>/repl_2.11-jars/livy-repl.jar
+livy.repl.jars = local://<%= node['livy']['base_dir'] %>/repl_2.11-jars/commons-codec.jar,local://<%= node['livy']['base_dir'] %>/repl_2.11-jars/livy-core.jar,local://<%= node['livy']['base_dir'] %>/repl_2.11-jars/livy-repl.jar
 
 # Comma-separated list of Livy Datanucleus jars. By default Livy will upload jars from its installation
 # directory every time a session is started. By caching these files in HDFS, for example, startup

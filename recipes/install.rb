@@ -16,6 +16,7 @@ hops_groups()
 group node['livy']['group'] do
   action :create
   not_if "getent group #{node['livy']['group']}"
+  not_if { node['install']['external_users'].casecmp("true") == 0 }
 end
 
 user node['livy']['user'] do
@@ -25,18 +26,21 @@ user node['livy']['user'] do
   shell "/bin/bash"
   manage_home true
   not_if "getent passwd #{node['livy']['user']}"
+  not_if { node['install']['external_users'].casecmp("true") == 0 }
 end
 
 group node['kagent']['certs_group'] do
   action :modify
   members ["#{node['livy']['user']}"]
   append true
+  not_if { node['install']['external_users'].casecmp("true") == 0 }
 end
 
 group node['hops']['group'] do
   action :modify
   members ["#{node['livy']['user']}"]
   append true
+  not_if { node['install']['external_users'].casecmp("true") == 0 }
 end
 
 

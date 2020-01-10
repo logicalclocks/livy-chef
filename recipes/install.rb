@@ -43,6 +43,13 @@ group node['hops']['group'] do
   not_if { node['install']['external_users'].casecmp("true") == 0 }
 end
 
+directory node["livy"]["dir"] do
+  owner node["livy"]["user"]
+  group node["livy"]["group"]
+  mode "755"
+  action :create
+  not_if { File.directory?("#{node["livy"]["dir"]}") }
+end
 
 package_url = "#{node['livy']['url']}"
 base_package_filename = File.basename(package_url)

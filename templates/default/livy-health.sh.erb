@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+set -e
+curl --fail --silent -X GET "http://$HOSTNAME:<%= node['livy']['port'] %>/sessions?from=0&size=1" > /dev/null 2>&1

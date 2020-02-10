@@ -52,6 +52,10 @@ directory node["livy"]["dir"] do
 end
 
 package_url = "#{node['livy']['url']}"
+if node['install']['enterprise']['install'].casecmp? "true"
+  package_url = "#{node['install']['enterprise']['download_url']}/livy/apache-livy-#{node['livy']['version']}.zip"
+end
+
 base_package_filename = File.basename(package_url)
 cached_package_filename = "#{Chef::Config['file_cache_path']}/#{base_package_filename}"
 
@@ -59,6 +63,8 @@ remote_file cached_package_filename do
   source package_url
   owner "#{node['livy']['user']}"
   mode "0644"
+  headers get_ee_basic_auth_header()
+  sensitive true
   action :create_if_missing
 end
 

@@ -24,10 +24,6 @@ attribute "livy/user",
           :description => "User to install/run as",
           :type => 'string'
 
-attribute "livy/group",
-          :description => "Group to install/run as",
-          :type => 'string'
-
 attribute "livy/dir",
           :description => "base dir for installation",
           :type => 'string'

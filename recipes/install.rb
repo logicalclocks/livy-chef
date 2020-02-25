@@ -13,15 +13,16 @@ my_ip = my_private_ip()
 
 hops_groups()
 
-group node['livy']['group'] do
+group node['hops']['group'] do
+  gid node['hops']['group_id']
   action :create
-  not_if "getent group #{node['livy']['group']}"
+  not_if "getent group #{node['hops']['group']}"
   not_if { node['install']['external_users'].casecmp("true") == 0 }
 end
 
 user node['livy']['user'] do
   home "/home/#{node['livy']['user']}"
-  gid node['livy']['group']
+  gid node['hops']['group']
   action :create
   shell "/bin/bash"
   manage_home true
@@ -35,6 +36,7 @@ group node['kagent']['certs_group'] do
   append true
   not_if { node['install']['external_users'].casecmp("true") == 0 }
 end
+
 
 group node['hops']['group'] do
   action :modify
@@ -70,7 +72,7 @@ livy_downloaded = "#{node['livy']['home']}/.livy_extracted_#{node['livy']['versi
 
 bash 'extract-livy' do
         user "root"
-        group node['livy']['group']
+        group node['hops']['group']
         code <<-EOH
                 set -e
                 unzip #{cached_package_filename} -d #{Chef::Config['file_cache_path']}
@@ -78,18 +80,18 @@ bash 'extract-livy' do
                 # remove old symbolic link, if any
                 rm -f #{node['livy']['base_dir']}
                 ln -s #{node['livy']['home']} #{node['livy']['base_dir']}
-                chown -R #{node['livy']['user']}:#{node['livy']['group']} #{node['livy']['home']}
-                chown -R #{node['livy']['user']}:#{node['livy']['group']} #{node['livy']['base_dir']}
+                chown -R #{node['livy']['user']}:#{node['hops']['group']} #{node['livy']['home']}
+                chown -R #{node['livy']['user']}:#{node['hops']['group']} #{node['livy']['base_dir']}
                 chmod 750 #{node['livy']['home']}
                 touch #{livy_downloaded}
-                chown -R #{node['livy']['user']}:#{node['livy']['group']} #{livy_downloaded}
+                chown -R #{node['livy']['user']}:#{node['hops']['group']} #{livy_downloaded}
         EOH
      not_if { ::File.exists?( "#{livy_downloaded}" ) }
 end
 
 bash 'link-jars' do
         user "root"
-        group node['livy']['group']
+        group node['hops']['group']
         code <<-EOH
                 rm -f #{node['livy']['base_dir']}/rsc-jars/livy-api.jar
                 rm -f #{node['livy']['base_dir']}/rsc-jars/livy-rsc.jar
@@ -108,7 +110,7 @@ end
 
 directory "#{node['livy']['home']}/logs" do
   owner node['livy']['user']
-  group node['livy']['group']
+  group node['hops']['group']
   mode "750"
   action :create
   not_if { File.directory?("#{node['livy']['home']}/logs") }

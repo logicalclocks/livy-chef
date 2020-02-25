@@ -25,7 +25,7 @@ end
 template "#{node['livy']['base_dir']}/conf/livy.conf" do
   source "livy.conf.erb"
   owner node['livy']['user']
-  group node['livy']['group']
+  group node['hops']['group']
   mode 0655
   variables({
         :private_ip => my_ip,
@@ -36,7 +36,7 @@ end
 template "#{node['livy']['base_dir']}/conf/log4j.properties" do
   source "log4j.properties.erb"
   owner node['livy']['user']
-  group node['livy']['group']
+  group node['hops']['group']
   mode 0655
 end
 
@@ -44,28 +44,28 @@ end
 template "#{node['livy']['base_dir']}/conf/spark-blacklist.conf" do
   source "spark-blacklist.conf.erb"
   owner node['livy']['user']
-  group node['livy']['group']
+  group node['hops']['group']
   mode 0655
 end
 
 template "#{node['livy']['base_dir']}/conf/livy-env.sh" do
   source "livy-env.sh.erb"
   owner node['livy']['user']
-  group node['livy']['group']
+  group node['hops']['group']
   mode 0655
 end
 
 template "#{node['livy']['base_dir']}/bin/start-livy.sh" do
   source "start-livy.sh.erb"
   owner node['livy']['user']
-  group node['livy']['group']
+  group node['hops']['group']
   mode 0751
 end
 
 template "#{node['livy']['base_dir']}/bin/stop-livy.sh" do
   source "stop-livy.sh.erb"
   owner node['livy']['user']
-  group node['livy']['group']
+  group node['hops']['group']
   mode 0751
 end
 

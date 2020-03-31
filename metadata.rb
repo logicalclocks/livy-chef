@@ -7,13 +7,7 @@ long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version          "1.2.0"
 source_url       "https://github.com/hopshadoop/livy-chef"
 
-
-
-depends          "hadoop_spark"
-depends          "ndb"
-depends          "hops"
-depends          "kagent"
-depends          "java"
+depends          "java", '~> 7.0.0'
 
 recipe           "install", "Installs a Livy Spark REST Server"
 recipe           "default", "Starts  a Livy Spark REST Server"

@@ -4,4 +4,4 @@ dependencies:
       - kagent::install
   - recipe: livy::default
     global:  
-      - hops::dn
+      - hops::rm

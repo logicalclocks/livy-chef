@@ -101,11 +101,19 @@ if node['livy']['systemd'] == "true"
     systemd_script = "/lib/systemd/system/#{service_name}.service"
   end
 
+  deps = ""
+  if exists_local("hops", "rm")
+    deps += "resourcemanager.service "
+  end
+  
   template systemd_script do
     source "#{service_name}.service.erb"
     owner "root"
     group "root"
     mode 0754
+    variables({
+      :deps => deps
+    })
 if node['services']['enabled'] == "true"
     notifies :enable, resources(:service => service_name)
 end

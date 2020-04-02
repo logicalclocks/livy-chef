@@ -9,7 +9,7 @@ service {
         id = "livy-check"
         name = "Health check for Livy"
         args = ["<%= node['livy']['base_dir'] %>/bin/livy-health.sh"]
-        interval = "10s"
-        timeout = "5s"
+        interval = "20s"
+        timeout = "20s"
     }
 }

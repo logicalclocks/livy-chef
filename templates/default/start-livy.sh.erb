@@ -3,6 +3,7 @@
 export SPARK_HOME=<%= node['hadoop_spark']['base_dir'] %>
 export SPARK_CONF_DIR=<%= node['hadoop_spark']['base_dir'] %>/conf
 export HADOOP_CONF_DIR=<%= node['hops']['base_dir'] %>/etc/hadoop
+export HADOOP_HOME=<%= node['hops']['base_dir'] %>
 
 PID_FILE=<%= node['livy']['pid_file'] %>
 if [ -f $PID_FILE ] ; then
@@ -14,6 +15,8 @@ if [ -f $PID_FILE ] ; then
  fi
 fi
 
+HADOOP_CLASSPATH=$($HADOOP_HOME/bin/hadoop classpath)
+export CLASSPATH=$HADOOP_CLASSPATH:$CLASSPATH
 
 nohup <%= node['livy']['base_dir'] %>/bin/livy-server  2>&1 >> <%= node['livy']['log'] %> &
 echo $! > $PID_FILE

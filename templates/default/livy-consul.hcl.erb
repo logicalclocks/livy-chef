@@ -11,5 +11,6 @@ service {
         args = ["<%= node['livy']['base_dir'] %>/bin/livy-health.sh"]
         interval = "20s"
         timeout = "20s"
+        status = "passing"
     }
 }

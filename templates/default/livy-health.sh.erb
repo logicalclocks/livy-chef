@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-CHECK="curl --fail --silent -X GET "http://$HOSTNAME:<%= node['livy']['port'] %>/sessions?from=0&size=1" > /dev/null 2>&1"
+CHECK="curl --fail --silent -X GET \"http://$HOSTNAME:<%= node['livy']['port'] %>/sessions?from=0&size=1\" > /dev/null 2>&1"
 
 source <%= node['consul']['health-check']['retryable-check-file'] %>
 

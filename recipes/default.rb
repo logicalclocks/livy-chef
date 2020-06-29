@@ -105,6 +105,8 @@ if node['livy']['systemd'] == "true"
   if exists_local("hops", "rm")
     deps += "resourcemanager.service "
   end
+
+  rpc_resourcemanager_fqdn = consul_helper.get_service_fqdn("rpc.resourcemanager")
   
   template systemd_script do
     source "#{service_name}.service.erb"
@@ -112,7 +114,8 @@ if node['livy']['systemd'] == "true"
     group "root"
     mode 0754
     variables({
-      :deps => deps
+                :deps => deps,
+                :rm_rpc_endpoint => rpc_resourcemanager_fqdn
     })
 if node['services']['enabled'] == "true"
     notifies :enable, resources(:service => service_name)

@@ -6,9 +6,11 @@ After=syslog.target network.target remote-fs.target <%= @deps %>
 User = <%= node['livy']['user'] %>
 
 PIDFile=<%= node['livy']['pid_file'] %>
+ExecStartPre=/bin/bash -c 'while ! /usr/bin/host <%= @rm_rpc_endpoint %> ; do /bin/sleep 5; done'
 ExecStart=<%= node['livy']['base_dir'] %>/bin/start-livy.sh
 ExecStop=<%= node['livy']['base_dir'] %>/bin/stop-livy.sh
 LimitNOFILE=20000
+TimeoutSec= 10min
 
 Type=forking
 

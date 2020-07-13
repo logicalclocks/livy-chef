@@ -37,6 +37,18 @@ group node['hops']['group'] do
   not_if { node['install']['external_users'].casecmp("true") == 0 }
 end
 
+group node['kagent']['userscerts_group'] do
+  action :create
+  not_if "getent group #{node['kagent']['userscerts_group']}"
+  not_if { node['install']['external_users'].casecmp("true") == 0 }
+end
+
+group node['kagent']['userscerts_group'] do
+  action :modify
+  members node['livy']['user']
+  append true
+  not_if { node['install']['external_users'].casecmp("true") == 0 }
+end
 
 group node['hops']['group'] do
   action :modify

@@ -111,7 +111,8 @@ if node['livy']['systemd'] == "true"
   if exists_local("hops", "rm")
     deps += "resourcemanager.service "
   end
-
+  deps += "consul.service "
+  
   rpc_resourcemanager_fqdn = consul_helper.get_service_fqdn("rpc.resourcemanager")
   
   template systemd_script do

@@ -6,7 +6,7 @@ kagent_hopsify "Generate x.509" do
   user node['livy']['user']
   crypto_directory x509_helper.get_crypto_dir(node['livy']['user'])
   action :generate_x509
-  not_if { conda_helpers.is_upgrade || node["kagent"]["test"] == true }
+  not_if { conda_helpers.is_upgrade || node["kagent"]["enabled"].eql? "false" }
 end
 
 home = node['hops']['hdfs']['user_home']

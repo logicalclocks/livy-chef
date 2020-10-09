@@ -1,6 +1,8 @@
 [Unit]
 Description=Livy server
 After=syslog.target network.target remote-fs.target <%= @deps %>
+StartLimitIntervalSec=120
+StartLimitBurst=15
 
 [Service]
 User = <%= node['livy']['user'] %>
@@ -11,6 +13,8 @@ ExecStart=<%= node['livy']['base_dir'] %>/bin/start-livy.sh
 ExecStop=<%= node['livy']['base_dir'] %>/bin/stop-livy.sh
 LimitNOFILE=20000
 TimeoutSec= 10min
+Restart=on-failure
+RestartSec=5
 
 Type=forking
 

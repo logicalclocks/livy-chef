@@ -115,12 +115,12 @@ bash 'link-jars' do
                 ln -s #{node['livy']['base_dir']}/rsc-jars/livy-api-*.jar #{node['livy']['base_dir']}/rsc-jars/livy-api.jar
                 ln -s #{node['livy']['base_dir']}/rsc-jars/livy-rsc-*jar #{node['livy']['base_dir']}/rsc-jars/livy-rsc.jar
                 ln -s #{node['livy']['base_dir']}/rsc-jars/netty-all-*.jar #{node['livy']['base_dir']}/rsc-jars/netty-all.jar
-                rm -f #{node['livy']['base_dir']}/repl_2.11-jars/commons-codec.jar
-                rm -f #{node['livy']['base_dir']}/repl_2.11-jars/livy-core.jar
-                rm -f #{node['livy']['base_dir']}/repl_2.11-jars/livy-repl.jar
-                ln -s #{node['livy']['base_dir']}/repl_2.11-jars/commons-codec-*.jar #{node['livy']['base_dir']}/repl_2.11-jars/commons-codec.jar
-                ln -s #{node['livy']['base_dir']}/repl_2.11-jars/livy-core_*.jar #{node['livy']['base_dir']}/repl_2.11-jars/livy-core.jar
-                ln -s #{node['livy']['base_dir']}/repl_2.11-jars/livy-repl_*.jar #{node['livy']['base_dir']}/repl_2.11-jars/livy-repl.jar
+                rm -f #{node['livy']['base_dir']}/repl_2.12-jars/commons-codec.jar
+                rm -f #{node['livy']['base_dir']}/repl_2.12-jars/livy-core.jar
+                rm -f #{node['livy']['base_dir']}/repl_2.12-jars/livy-repl.jar
+                ln -s #{node['livy']['base_dir']}/repl_2.12-jars/commons-codec-*.jar #{node['livy']['base_dir']}/repl_2.12-jars/commons-codec.jar
+                ln -s #{node['livy']['base_dir']}/repl_2.12-jars/livy-core_*.jar #{node['livy']['base_dir']}/repl_2.12-jars/livy-core.jar
+                ln -s #{node['livy']['base_dir']}/repl_2.12-jars/livy-repl_*.jar #{node['livy']['base_dir']}/repl_2.12-jars/livy-repl.jar
         EOH
 end
 

@@ -3,7 +3,7 @@ include_attribute "kagent"
 default['livy']['user']                    = node['install']['user'].empty? ? "livy" : node['install']['user']
 default['livy']['user-home']               = "/home/#{node['livy']['user']}"
 
-default['livy']['version']                 = "0.8.0-incubating-SNAPSHOT"
+default['livy']['version']                 = "0.8.0-incubating-SNAPSHOT-bin"
 default['livy']['url']                     = "#{node['download_url']}/apache-livy-#{node['livy']['version']}.zip"
 default['livy']['port']                    = "8998"
 default['livy']['dir']                     = node['install']['dir'].empty? ? "/srv" : node['install']['dir']

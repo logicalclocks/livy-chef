@@ -8,7 +8,6 @@ StartLimitBurst=15
 User = <%= node['livy']['user'] %>
 
 PIDFile=<%= node['livy']['pid_file'] %>
-ExecStartPre=/bin/bash -c 'while ! /usr/bin/host <%= @rm_rpc_endpoint %> ; do if systemctl list-units --full -all | grep -Fq 'resourcemanager'; then if systemctl is-active --quiet resourcemanager; then /bin/sleep 5; else ! break; fi; else /bin/sleep 5; fi; done'
 ExecStart=<%= node['livy']['base_dir'] %>/bin/start-livy.sh
 ExecStop=<%= node['livy']['base_dir'] %>/bin/stop-livy.sh
 LimitNOFILE=20000

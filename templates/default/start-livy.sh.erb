@@ -1,5 +1,9 @@
 #!/bin/bash
 
+if ! /usr/bin/host <%= @rm_rpc_endpoint %> ; then
+  exit 1
+fi
+
 export SPARK_HOME=<%= node['hadoop_spark']['base_dir'] %>
 export SPARK_CONF_DIR=<%= node['hadoop_spark']['base_dir'] %>/conf
 export HADOOP_CONF_DIR=<%= node['hops']['base_dir'] %>/etc/hadoop

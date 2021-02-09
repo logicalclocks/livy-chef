@@ -61,11 +61,16 @@ template "#{node['livy']['base_dir']}/conf/livy-env.sh" do
   mode 0655
 end
 
+rpc_resourcemanager_fqdn = consul_helper.get_service_fqdn("rpc.resourcemanager")
+
 template "#{node['livy']['base_dir']}/bin/start-livy.sh" do
   source "start-livy.sh.erb"
   owner node['livy']['user']
   group node['hops']['group']
   mode 0751
+  variables({
+              :rm_rpc_endpoint => rpc_resourcemanager_fqdn
+  })
 end
 
 template "#{node['livy']['base_dir']}/bin/stop-livy.sh" do
@@ -113,8 +118,6 @@ if node['livy']['systemd'] == "true"
   end
   deps += "consul.service "
   
-  rpc_resourcemanager_fqdn = consul_helper.get_service_fqdn("rpc.resourcemanager")
-
   template systemd_script do
     source "#{service_name}.service.erb"
     owner "root"

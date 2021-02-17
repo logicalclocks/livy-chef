@@ -9,10 +9,6 @@
 
 include_recipe "java"
 
-my_ip = my_private_ip()
-
-hops_groups()
-
 group node['hops']['group'] do
   gid node['hops']['group_id']
   action :create

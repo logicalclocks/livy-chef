@@ -7,25 +7,6 @@ kagent_hopsify "Generate x.509" do
   not_if { node["kagent"]["test"] == true }
 end
 
-home = node['hops']['hdfs']['user_home']
-livy_dir="#{home}/#{node['livy']['user']}"
-hops_hdfs_directory "#{livy_dir}" do
-  action :create_as_superuser
-  owner node['livy']['user']
-  group node['hops']['group']
-  mode "1770"
-end
-
-tmp_dirs = [ livy_dir, "#{livy_dir}/rsc-jars", "#{livy_dir}/rpl-jars" ]
-for d in tmp_dirs
- hops_hdfs_directory d do
-    action :create_as_superuser
-    owner node['livy']['user']
-    group node['hops']['group']
-    mode "1777"
-  end
-end
-
 template "#{node['livy']['base_dir']}/conf/livy.conf" do
   source "livy.conf.erb"
   owner node['livy']['user']

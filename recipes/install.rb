@@ -1,14 +1,3 @@
-#
-# Cookbook Name:: livy
-# Recipe:: install
-#
-# Copyright 2016, Jim Dowling
-#
-# All rights reserved
-#
-
-include_recipe "java"
-
 group node['hops']['group'] do
   gid node['hops']['group_id']
   action :create
@@ -72,7 +61,6 @@ end
 package_url = "#{node['livy']['url']}"
 base_package_filename = File.basename(package_url)
 cached_package_filename = "#{Chef::Config['file_cache_path']}/#{base_package_filename}"
-
 remote_file cached_package_filename do
   source package_url
   owner "#{node['livy']['user']}"
@@ -80,48 +68,29 @@ remote_file cached_package_filename do
   action :create_if_missing
 end
 
-
 package "unzip"
 
 # Extract Livy
 livy_downloaded = "#{node['livy']['home']}/.livy_extracted_#{node['livy']['version']}"
 
 bash 'extract-livy' do
-        user "root"
-        group node['hops']['group']
-        code <<-EOH
-                set -e
-                unzip #{cached_package_filename} -d #{Chef::Config['file_cache_path']}
-                mv #{Chef::Config['file_cache_path']}/apache-livy-#{node['livy']['version']} #{node['livy']['dir']}
-                # remove old symbolic link, if any
-                rm -f #{node['livy']['base_dir']}
-                ln -s #{node['livy']['home']} #{node['livy']['base_dir']}
-                chown -R #{node['livy']['user']}:#{node['hops']['group']} #{node['livy']['home']}
-                chown -R #{node['livy']['user']}:#{node['hops']['group']} #{node['livy']['base_dir']}
-                chmod 750 #{node['livy']['home']}
-                touch #{livy_downloaded}
-                chown -R #{node['livy']['user']}:#{node['hops']['group']} #{livy_downloaded}
-        EOH
-     not_if { ::File.exists?( "#{livy_downloaded}" ) }
-end
+  user "root"
+  group node['hops']['group']
+  code <<-EOH
+    set -e
+    unzip #{cached_package_filename} -d #{Chef::Config['file_cache_path']}
+    mv #{Chef::Config['file_cache_path']}/apache-livy-#{node['livy']['version']} #{node['livy']['dir']}
 
-bash 'link-jars' do
-        user "root"
-        group node['hops']['group']
-        code <<-EOH
-                rm -f #{node['livy']['base_dir']}/rsc-jars/livy-api.jar
-                rm -f #{node['livy']['base_dir']}/rsc-jars/livy-rsc.jar
-                rm -f #{node['livy']['base_dir']}/rsc-jars/netty-all.jar
-                ln -s #{node['livy']['base_dir']}/rsc-jars/livy-api-*.jar #{node['livy']['base_dir']}/rsc-jars/livy-api.jar
-                ln -s #{node['livy']['base_dir']}/rsc-jars/livy-rsc-*jar #{node['livy']['base_dir']}/rsc-jars/livy-rsc.jar
-                ln -s #{node['livy']['base_dir']}/rsc-jars/netty-all-*.jar #{node['livy']['base_dir']}/rsc-jars/netty-all.jar
-                rm -f #{node['livy']['base_dir']}/repl_2.12-jars/commons-codec.jar
-                rm -f #{node['livy']['base_dir']}/repl_2.12-jars/livy-core.jar
-                rm -f #{node['livy']['base_dir']}/repl_2.12-jars/livy-repl.jar
-                ln -s #{node['livy']['base_dir']}/repl_2.12-jars/commons-codec-*.jar #{node['livy']['base_dir']}/repl_2.12-jars/commons-codec.jar
-                ln -s #{node['livy']['base_dir']}/repl_2.12-jars/livy-core_*.jar #{node['livy']['base_dir']}/repl_2.12-jars/livy-core.jar
-                ln -s #{node['livy']['base_dir']}/repl_2.12-jars/livy-repl_*.jar #{node['livy']['base_dir']}/repl_2.12-jars/livy-repl.jar
-        EOH
+    # remove old symbolic link, if any
+    rm -f #{node['livy']['base_dir']}
+
+    ln -s #{node['livy']['home']} #{node['livy']['base_dir']}
+    touch #{livy_downloaded}
+    chmod 750 #{node['livy']['home']}
+    chown -R #{node['livy']['user']}:#{node['hops']['group']} #{node['livy']['home']}
+    chown -R #{node['livy']['user']}:#{node['hops']['group']} #{node['livy']['base_dir']}
+  EOH
+  not_if { ::File.exists?( "#{livy_downloaded}" ) }
 end
 
 directory "#{node['livy']['home']}/logs" do
@@ -129,5 +98,11 @@ directory "#{node['livy']['home']}/logs" do
   group node['hops']['group']
   mode "750"
   action :create
-  not_if { File.directory?("#{node['livy']['home']}/logs") }
+end
+
+directory node['livy']['state_dir']} do
+  owner node['livy']['user']
+  group node['hops']['group']
+  mode "700"
+  action :create
 end

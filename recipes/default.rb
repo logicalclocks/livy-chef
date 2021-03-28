@@ -1,5 +1,3 @@
-my_ip = my_private_ip()
-
 kagent_hopsify "Generate x.509" do
   user node['livy']['user']
   crypto_directory x509_helper.get_crypto_dir(node['livy']['user'])
@@ -7,13 +5,39 @@ kagent_hopsify "Generate x.509" do
   not_if { node["kagent"]["test"] == true }
 end
 
+rsc_jars = ""
+repl_jars = ""
+datanucleus_jars = ""
+pyspark_archives = ""
+ruby_block 'read dir content for configuration' do
+  block do
+    rsc_jars = Dir["#{node['livy']['base_dir']}/rsc-jars/*"]
+        .map{|d| "local://#{d}"}
+        .join(",")
+    repl_jars = Dir["#{node['livy']['base_dir']}/repl_2.12-jars/*"]
+        .map{|d| "local://#{d}"}
+        .join(",")
+    datanucleus_jars= Dir["#{node['hadoop_spark']['base_dir']}/jars/*"]
+        .filter{|d| d.include?("datanucleus")}
+        .map{|d| "local://#{d}"}
+        .join(",")
+    pyspark_archives = Dir["#{node['hadoop_spark']['base_dir']}/python/lib/*"]
+        .filter{|d| d.include?(".zip")}
+        .map{|d| "local://#{d}"}
+        .join(",")
+  end
+end
+
 template "#{node['livy']['base_dir']}/conf/livy.conf" do
   source "livy.conf.erb"
   owner node['livy']['user']
   group node['hops']['group']
   mode 0655
-  variables({
-        :private_ip => my_ip
+  variables( lazy {
+      :rsc_jars => rsc_jars,
+      :repl_jars => repl_jars,
+      :datanucleus_jars => datanucleus_jars,
+      :pyspark_archives => pyspark_archives
   })
 end
 

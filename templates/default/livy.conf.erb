@@ -1,12 +1,6 @@
-# Use this keystore for the SSL certificate and key.
-#livy.keystore = <%= node['livy']['keystore'] %>
-
-# Specify the keystore password.
-livy.keystore.password  = <%= node['livy']['keystore_password'] %>
-
 # What host address to start the server on. Defaults to 0.0.0.0. If using the
 # `yarn` factory mode, this address must be accessible from the YARN nodes.
-livy.server.host = <%= @private_ip %>
+livy.server.host = 0.0.0.0
 
 # What port to start the server on.
 livy.server.port = <%= node['livy']['port'] %>
@@ -26,45 +20,25 @@ livy.server.csrf-protection.enabled = false
 # Comma-separated list of Livy RSC jars. By default Livy will upload jars from its installation
 # directory every time a session is started. By caching these files in HDFS, for example, startup
 # time of sessions on YARN can be reduced.
-livy.rsc.jars = local://<%= node['livy']['base_dir'] %>/rsc-jars/livy-api.jar,local://<%= node['livy']['base_dir'] %>/rsc-jars/livy-rsc.jar,local://<%= node['livy']['base_dir'] %>/rsc-jars/netty-all.jar
+livy.rsc.jars = <%= @rsc_jars %>
 
 # Comma-separated list of Livy REPL jars. By default Livy will upload jars from its installation
 # directory every time a session is started. By caching these files in HDFS, for example, startup
 # time of sessions on YARN can be reduced.
-livy.repl.jars = local://<%= node['livy']['base_dir'] %>/repl_2.11-jars/commons-codec.jar,local://<%= node['livy']['base_dir'] %>/repl_2.11-jars/livy-core.jar,local://<%= node['livy']['base_dir'] %>/repl_2.11-jars/livy-repl.jar
+livy.repl.jars = <%= @repl_jars %>
 
 # Comma-separated list of Livy Datanucleus jars. By default Livy will upload jars from its installation
 # directory every time a session is started. By caching these files in HDFS, for example, startup
 # time of sessions on YARN can be reduced.
-livy.datanucleus.jars = local://<%= node['hadoop_spark']['base_dir'] %>/jars/datanucleus-api.jar,local://<%= node['hadoop_spark']['base_dir'] %>/jars/datanucleus-core.jar
-,local://<%= node['hadoop_spark']['base_dir'] %>/jars/datanucleus-rdbms.jar
+livy.datanucleus.jars = <%= @datanucleus_jars %>
 
 # Location of PySpark archives. By default Livy will upload the file from SPARK_HOME, but
 # by caching the file in HDFS, startup time of PySpark sessions on YARN can be reduced.
-livy.rsc.pyspark.archives = local://<%= node['hadoop_spark']['base_dir'] %>/python/lib/pyspark.zip,local://<%= node['hadoop_spark']['base_dir'] %>/python/lib/py4j-src.zip
+livy.rsc.pyspark.archives = <%= @pyspark_archives %>
 
 # Location of the SparkR package. By default Livy will upload the file from SPARK_HOME, but
 # by caching the file in HDFS, startup time of R sessions on YARN can be reduced.
 livy.rsc.sparkr.package = local://<%= node['hadoop_spark']['base_dir'] %>/R/lib/sparkr.zip
-
-
-# Comma-separated list of Livy RSC jars. By default Livy will upload jars from its installation
-# directory every time a session is started. By caching these files in HDFS, for example, startup
-# time of sessions on YARN can be reduced.
-#livy.jars = 
-
-# Comma-separated list of Livy REPL jars. By default Livy will upload jars from its installation
-# directory every time a session is started. By caching these files in HDFS, for example, startup
-# time of sessions on YARN can be reduced.
-#livy.repl.jars = 
-
-# Location of PySpark archives. By default Livy will upload the file from SPARK_HOME, but
-# by caching the file in HDFS, startup time of PySpark sessions on YARN can be reduced.
-# livy.pyspark.archives =
-
-# Location of the SparkR package. By default Livy will upload the file from SPARK_HOME, but
-# by caching the file in HDFS, startup time of R sessions on YARN can be reduced.
-# livy.sparkr.package =
 
 # List of local directories from where files are allowed to be added to user sessions. By
 # default it's empty, meaning users can only reference remote URIs when starting their
@@ -72,11 +46,8 @@ livy.rsc.sparkr.package = local://<%= node['hadoop_spark']['base_dir'] %>/R/lib/
 # livy.file.local-dir-whitelist =
 
 livy.server.recovery.mode=recovery
-
 livy.server.recovery.state-store=filesystem
-
-livy.server.recovery.state-store.url = file://<%= node['livy']['base_dir'] %>/logs
-
+livy.server.recovery.state-store.url = file://<%= node['livy']['state_dir'] %>
 livy.repl.enable-hive-context = true
 
 #RPC size properties, for large installations it might have to be further increased. Set default to 256MB

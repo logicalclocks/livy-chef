@@ -18,11 +18,11 @@ ruby_block 'read dir content for configuration' do
         .map{|d| "local://#{d}"}
         .join(",")
     datanucleus_jars= Dir["#{node['hadoop_spark']['base_dir']}/jars/*"]
-        .filter{|d| d.include?("datanucleus")}
+        .select{|d| d.include?("datanucleus")}
         .map{|d| "local://#{d}"}
         .join(",")
     pyspark_archives = Dir["#{node['hadoop_spark']['base_dir']}/python/lib/*"]
-        .filter{|d| d.include?(".zip")}
+        .select{|d| d.include?(".zip")}
         .map{|d| "local://#{d}"}
         .join(",")
   end
@@ -33,12 +33,12 @@ template "#{node['livy']['base_dir']}/conf/livy.conf" do
   owner node['livy']['user']
   group node['hops']['group']
   mode 0655
-  variables( lazy {
+  variables( lazy {{
       :rsc_jars => rsc_jars,
       :repl_jars => repl_jars,
       :datanucleus_jars => datanucleus_jars,
       :pyspark_archives => pyspark_archives
-  })
+  }})
 end
 
 template "#{node['livy']['base_dir']}/conf/log4j.properties" do

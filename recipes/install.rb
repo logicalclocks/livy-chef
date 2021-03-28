@@ -100,7 +100,7 @@ directory "#{node['livy']['home']}/logs" do
   action :create
 end
 
-directory node['livy']['state_dir']} do
+directory node['livy']['state_dir'] do
   owner node['livy']['user']
   group node['hops']['group']
   mode "700"

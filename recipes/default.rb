@@ -14,7 +14,7 @@ ruby_block 'read dir content for configuration' do
     rsc_jars = Dir["#{node['livy']['base_dir']}/rsc-jars/*"]
         .map{|d| "local://#{d}"}
         .join(",")
-    repl_jars = Dir["#{node['livy']['base_dir']}/repl_2.12-jars/*"]
+    repl_jars = Dir["#{node['livy']['base_dir']}/repl_#{node['scala']['version']}-jars/*"]
         .map{|d| "local://#{d}"}
         .join(",")
     datanucleus_jars= Dir["#{node['hadoop_spark']['base_dir']}/jars/*"]
@@ -64,7 +64,6 @@ template "#{node['livy']['base_dir']}/conf/livy-env.sh" do
 end
 
 rpc_resourcemanager_fqdn = consul_helper.get_service_fqdn("rpc.resourcemanager")
-
 template "#{node['livy']['base_dir']}/bin/start-livy.sh" do
   source "start-livy.sh.erb"
   owner node['livy']['user']

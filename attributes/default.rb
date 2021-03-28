@@ -1,4 +1,5 @@
 include_attribute "kagent"
+include_attribute "hadoop_spark"
 
 default['livy']['user']                    = node['install']['user'].empty? ? "livy" : node['install']['user']
 default['livy']['user-home']               = "/home/#{node['livy']['user']}"

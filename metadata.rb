@@ -84,3 +84,7 @@ attribute "livy/rpc/max/size",
           :dscription => "Max size of rpc. Default: '256MB' ",
           :type => "string"
 
+attribute "livy/connect-timeout",
+          :dscription => "timeout for livy to wait for the application master to start value followed by unites",
+          :type => "string"
+

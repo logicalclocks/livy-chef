@@ -36,6 +36,13 @@ template "#{node['livy']['base_dir']}/conf/livy.conf" do
   })
 end
 
+template "#{node['livy']['base_dir']}/conf/livy-client.conf" do
+  source "livy-client.conf.erb"
+  owner node['livy']['user']
+  group node['hops']['group']
+  mode 0655
+end
+
 template "#{node['livy']['base_dir']}/conf/log4j.properties" do
   source "log4j.properties.erb"
   owner node['livy']['user']

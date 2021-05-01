@@ -4,7 +4,7 @@ maintainer_email "jdowling@kth.se"
 license          "Apache v2"
 description      'Installs/Configures Livy Server'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version          "2.2.0"
+version          "2.3.0"
 source_url       "https://github.com/hopshadoop/livy-chef"
 
 
@@ -82,5 +82,9 @@ attribute "livy/rsc/rpc/max/size",
 
 attribute "livy/rpc/max/size",
           :dscription => "Max size of rpc. Default: '256MB' ",
+          :type => "string"
+
+attribute "livy/connect-timeout",
+          :dscription => "timeout for livy to wait for the application master to start value followed by unites",
           :type => "string"
 

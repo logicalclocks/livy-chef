@@ -20,5 +20,6 @@ default['livy']['pid_file']                = "/tmp/apache-livy.pid"
 default['livy']['log']                     = "#{node['livy']['base_dir']}/logs/apache-livy-logfile.log"
 default['livy']['log_size']                = "20MB"
 
-default['livy']['rsc']['rpc']['max']['size'] =  "268435456"
-default['livy']['rpc']['max']['size']        =  "268435456"
+default['livy']['rsc']['rpc']['max']['size'] = "268435456"
+default['livy']['rpc']['max']['size']        = "268435456"
+default['livy']['connect-timeout']           = "90s"

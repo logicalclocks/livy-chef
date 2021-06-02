@@ -1,5 +1,3 @@
-my_ip = my_private_ip()
-
 kagent_hopsify "Generate x.509" do
   user node['livy']['user']
   crypto_directory x509_helper.get_crypto_dir(node['livy']['user'])
@@ -7,22 +5,26 @@ kagent_hopsify "Generate x.509" do
   not_if { node["kagent"]["test"] == true }
 end
 
-home = node['hops']['hdfs']['user_home']
-livy_dir="#{home}/#{node['livy']['user']}"
-hops_hdfs_directory "#{livy_dir}" do
-  action :create_as_superuser
-  owner node['livy']['user']
-  group node['hops']['group']
-  mode "1770"
-end
-
-tmp_dirs = [ livy_dir, "#{livy_dir}/rsc-jars", "#{livy_dir}/rpl-jars" ]
-for d in tmp_dirs
- hops_hdfs_directory d do
-    action :create_as_superuser
-    owner node['livy']['user']
-    group node['hops']['group']
-    mode "1777"
+rsc_jars = ""
+repl_jars = ""
+datanucleus_jars = ""
+pyspark_archives = ""
+ruby_block 'read dir content for configuration' do
+  block do
+    rsc_jars = Dir["#{node['livy']['base_dir']}/rsc-jars/*"]
+        .map{|d| "local://#{d}"}
+        .join(",")
+    repl_jars = Dir["#{node['livy']['base_dir']}/repl_#{node['scala']['version']}-jars/*"]
+        .map{|d| "local://#{d}"}
+        .join(",")
+    datanucleus_jars= Dir["#{node['hadoop_spark']['base_dir']}/jars/*"]
+        .select{|d| d.include?("datanucleus")}
+        .map{|d| "local://#{d}"}
+        .join(",")
+    pyspark_archives = Dir["#{node['hadoop_spark']['base_dir']}/python/lib/*"]
+        .select{|d| d.include?(".zip")}
+        .map{|d| "local://#{d}"}
+        .join(",")
   end
 end
 
@@ -31,9 +33,12 @@ template "#{node['livy']['base_dir']}/conf/livy.conf" do
   owner node['livy']['user']
   group node['hops']['group']
   mode 0655
-  variables({
-        :private_ip => my_ip
-  })
+  variables( lazy {{
+      :rsc_jars => rsc_jars,
+      :repl_jars => repl_jars,
+      :datanucleus_jars => datanucleus_jars,
+      :pyspark_archives => pyspark_archives
+  }})
 end
 
 template "#{node['livy']['base_dir']}/conf/livy-client.conf" do
@@ -66,7 +71,6 @@ template "#{node['livy']['base_dir']}/conf/livy-env.sh" do
 end
 
 rpc_resourcemanager_fqdn = consul_helper.get_service_fqdn("rpc.resourcemanager")
-
 template "#{node['livy']['base_dir']}/bin/start-livy.sh" do
   source "start-livy.sh.erb"
   owner node['livy']['user']

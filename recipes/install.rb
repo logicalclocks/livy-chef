@@ -139,6 +139,17 @@ bash 'Move Livy state to data volume' do
   code <<-EOH
     set -e
     mv -f #{node['livy']['state_dir']}/* #{node['livy']['data_volume']['state_dir']}
+  EOH
+  only_if { conda_helpers.is_upgrade }
+  only_if { File.directory?(node['livy']['state_dir'])}
+  not_if { File.symlink?(node['livy']['state_dir'])}
+  not_if { Dir.empty?(node['livy']['state_dir'])}
+end
+
+bash 'Delete old Livy state' do
+  user 'root'
+  code <<-EOH
+    set -e
     rm -rf #{node['livy']['state_dir']}
   EOH
   only_if { conda_helpers.is_upgrade }

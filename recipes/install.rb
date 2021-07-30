@@ -101,11 +101,16 @@ directory node['data']['dir'] do
   not_if { ::File.directory?(node['data']['dir']) }
 end
 
+directory node['livy']['data_volume']['root_dir'] do
+  owner node['livy']['user']
+  group node['hops']['group']
+  mode '0750'
+end
+
 directory node['livy']['data_volume']['logs_dir'] do
   owner node['livy']['user']
   group node['hops']['group']
   mode '0750'
-  recursive true
 end
 
 bash 'Move Livy logs to data volume' do
@@ -131,7 +136,6 @@ directory node['livy']['data_volume']['state_dir'] do
   owner node['livy']['user']
   group node['hops']['group']
   mode '0700'
-  recursive true
 end
 
 bash 'Move Livy state to data volume' do

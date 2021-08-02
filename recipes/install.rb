@@ -93,16 +93,77 @@ bash 'extract-livy' do
   not_if { ::File.exists?( "#{livy_downloaded}" ) }
 end
 
-directory "#{node['livy']['home']}/logs" do
-  owner node['livy']['user']
-  group node['hops']['group']
-  mode "750"
+directory node['data']['dir'] do
+  owner 'root'
+  group 'root'
+  mode '0775'
   action :create
+  not_if { ::File.directory?(node['data']['dir']) }
 end
 
-directory node['livy']['state_dir'] do
+directory node['livy']['data_volume']['root_dir'] do
   owner node['livy']['user']
   group node['hops']['group']
-  mode "700"
-  action :create
+  mode '0750'
+end
+
+directory node['livy']['data_volume']['logs_dir'] do
+  owner node['livy']['user']
+  group node['hops']['group']
+  mode '0750'
+end
+
+bash 'Move Livy logs to data volume' do
+  user 'root'
+  code <<-EOH
+    set -e
+    mv -f #{node['livy']['logs_dir']}/* #{node['livy']['data_volume']['logs_dir']}
+    rm -rf #{node['livy']['logs_dir']}
+  EOH
+  only_if { conda_helpers.is_upgrade }
+  only_if { File.directory?(node['livy']['logs_dir'])}
+  not_if { File.symlink?(node['livy']['logs_dir'])}
+end
+
+link node['livy']['logs_dir'] do
+  owner node['livy']['user']
+  group node['hops']['group']
+  mode '0750'
+  to node['livy']['data_volume']['logs_dir']
+end
+
+directory node['livy']['data_volume']['state_dir'] do
+  owner node['livy']['user']
+  group node['hops']['group']
+  mode '0700'
+end
+
+bash 'Move Livy state to data volume' do
+  user 'root'
+  code <<-EOH
+    set -e
+    mv -f #{node['livy']['state_dir']}/* #{node['livy']['data_volume']['state_dir']}
+  EOH
+  only_if { conda_helpers.is_upgrade }
+  only_if { File.directory?(node['livy']['state_dir'])}
+  not_if { File.symlink?(node['livy']['state_dir'])}
+  not_if { Dir.empty?(node['livy']['state_dir'])}
+end
+
+bash 'Delete old Livy state' do
+  user 'root'
+  code <<-EOH
+    set -e
+    rm -rf #{node['livy']['state_dir']}
+  EOH
+  only_if { conda_helpers.is_upgrade }
+  only_if { File.directory?(node['livy']['state_dir'])}
+  not_if { File.symlink?(node['livy']['state_dir'])}
+end
+
+link node['livy']['state_dir'] do
+  owner node['livy']['user']
+  group node['hops']['group']
+  mode '0700'
+  to node['livy']['data_volume']['state_dir']
 end

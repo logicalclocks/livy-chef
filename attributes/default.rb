@@ -2,6 +2,7 @@ include_attribute "kagent"
 include_attribute "hadoop_spark"
 
 default['livy']['user']                    = node['install']['user'].empty? ? "livy" : node['install']['user']
+default['livy']['user_id']                 = '1518'
 default['livy']['user-home']               = "/home/#{node['livy']['user']}"
 
 default['livy']['version']                 = "0.8.0-incubating-SNAPSHOT-bin"

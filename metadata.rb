@@ -24,6 +24,10 @@ attribute "livy/user",
           :description => "User to install/run as",
           :type => 'string'
 
+attribute "livy/user_id",
+          :description => "livy user id. Default: 1518",
+          :type => 'string'
+
 attribute "livy/user-home",
           :description => "Home directory of livy user",
           :type => 'string'

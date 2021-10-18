@@ -5,6 +5,13 @@ livy.server.host = 0.0.0.0
 # What port to start the server on.
 livy.server.port = <%= node['livy']['port'] %>
 
+# Location of the certificates to use for authentication.
+livy.server.cert.location = /srv/hops/super_crypto/livy
+
+livy.keystore = livy__kstore.jks
+livy.truststore = livy__tstore.jks
+livy.password = livy__passwd
+
 # What spark master Livy sessions should use.
 livy.spark.master = yarn
 

@@ -31,20 +31,6 @@ group node["kagent"]["certs_group"] do
   only_if { conda_helpers.is_upgrade }
 end
 
-group node['kagent']['userscerts_group'] do
-  action :create
-  gid node['kagent']['userscerts_group_id']
-  not_if "getent group #{node['kagent']['userscerts_group']}"
-  not_if { node['install']['external_users'].casecmp("true") == 0 }
-end
-
-group node['kagent']['userscerts_group'] do
-  action :modify
-  members node['livy']['user']
-  append true
-  not_if { node['install']['external_users'].casecmp("true") == 0 }
-end
-
 group node['hops']['group'] do
   action :modify
   members node['livy']['user']

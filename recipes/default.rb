@@ -41,11 +41,15 @@ template "#{node['livy']['base_dir']}/conf/livy.conf" do
   }})
 end
 
+livy_fqdn = consul_helper.get_service_fqdn("livy")
 template "#{node['livy']['base_dir']}/conf/livy-client.conf" do
   source "livy-client.conf.erb"
   owner node['livy']['user']
   group node['hops']['group']
   mode 0655
+  variables({
+    :livy_fqdn => livy_fqdn,
+  })
 end
 
 template "#{node['livy']['base_dir']}/conf/log4j.properties" do

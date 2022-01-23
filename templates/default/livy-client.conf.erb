@@ -29,3 +29,4 @@
 
 # How long the rsc client will wait when attempting to connect to the Livy server
 livy.rsc.server.connect.timeout = <%= node['livy']['connect-timeout'] %>
+livy.rsc.launcher.address = <%= @livy_fqdn %>

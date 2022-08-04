@@ -29,3 +29,5 @@ default['livy']['log_size']                = "20MB"
 default['livy']['rsc']['rpc']['max']['size'] = "268435456"
 default['livy']['rpc']['max']['size']        = "268435456"
 default['livy']['connect-timeout']           = "90s"
+
+default['livy']['max_heap']                  = "2G"

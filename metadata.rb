@@ -92,3 +92,7 @@ attribute "livy/connect-timeout",
           :dscription => "timeout for livy to wait for the application master to start value followed by unites",
           :type => "string"
 
+attribute "livy/max_heap",
+          :dscription => "Max heap size of the Livy Server JVM (Default: 2G)",
+          :type => "string"
+

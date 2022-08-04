@@ -31,6 +31,7 @@ SPARK_HOME=<%= node['hadoop_spark']['base_dir'] %>
 # - LIVY_PID_DIR    Where the pid file is stored. (Default: /tmp)
 # - LIVY_SERVER_JAVA_OPTS  Java Opts for running livy server (You can set jvm related setting here,
 #                          like jvm memory/gc algorithm and etc.)
+LIVY_SERVER_JAVA_OPTS="-Xmx<%= node['livy']['max_heap'] %>"
 
 #  A name that identifies the Livy server instance, used to generate log file
 #                     names. (Default: name of the user starting Livy).

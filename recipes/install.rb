@@ -56,7 +56,10 @@ remote_file cached_package_filename do
   action :create_if_missing
 end
 
-package "unzip"
+package "unzip" do
+  retries 10
+  retry_delay 30
+end
 
 # Extract Livy
 livy_downloaded = "#{node['livy']['home']}/.livy_extracted_#{node['livy']['version']}"

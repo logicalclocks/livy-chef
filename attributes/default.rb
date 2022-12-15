@@ -5,7 +5,7 @@ default['livy']['user']                    = node['install']['user'].empty? ? "l
 default['livy']['user_id']                 = '1518'
 default['livy']['user-home']               = "/home/#{node['livy']['user']}"
 
-default['livy']['version']                 = "0.8.2-incubating-SNAPSHOT-bin"
+default['livy']['version']                 = "0.8.3-incubating-SNAPSHOT-bin"
 default['livy']['url']                     = "#{node['download_url']}/apache-livy-#{node['livy']['version']}.zip"
 default['livy']['port']                    = "8998"
 default['livy']['dir']                     = node['install']['dir'].empty? ? "/srv" : node['install']['dir']
@@ -18,12 +18,12 @@ default['livy']['data_volume']['logs_dir']  = "#{node['livy']['data_volume']['ro
 
 # Directory to store state for recovery
 default['livy']['state_dir']               = "#{node['livy']['base_dir']}/state"
+default['livy']['conf_dir']                = "#{node['livy']['base_dir']}/conf"
+default['livy']['logs_dir']                = "#{node['livy']['base_dir']}/logs"
 
 default['livy']['keystore']                = "#{node['kagent']['certs_dir']}/keystores/#{node['hostname']}__kstore.jks"
 
 default['livy']['pid_file']                = "/tmp/apache-livy.pid"
-default['livy']['logs_dir']                = "#{node['livy']['base_dir']}/logs"
-default['livy']['log']                     = "#{node['livy']['logs_dir']}/apache-livy-logfile.log"
 default['livy']['log_size']                = "20MB"
 
 default['livy']['rsc']['rpc']['max']['size'] = "268435456"

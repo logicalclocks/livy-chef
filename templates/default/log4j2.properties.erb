@@ -1,0 +1,19 @@
+# list of all appenders
+rootLogger.level = INFO 
+rootLogger.appenderRefs = root
+rootLogger.appenderRef.root.ref = DRFA
+
+appenders = DRFA
+
+# daily rolling file appender
+appender.DRFA.type = RollingRandomAccessFile
+appender.DRFA.name = DRFA
+appender.DRFA.fileName = <%= node['livy']['logs_dir'] %>/apache-livy.log
+appender.DRFA.filePattern= <%= node['livy']['logs_dir'] %>/apache-livy.log.%i
+appender.DRFA.layout.type = PatternLayout
+appender.DRFA.layout.pattern = %d{ISO8601} %p %c: %m%n
+appender.DRFA.policies.type = Policies
+appender.DRFA.policies.size.type = SizeBasedTriggeringPolicy
+appender.DRFA.policies.size.size = 256 MB
+appender.DRFA.strategy.type = DefaultRolloverStrategy
+appender.DRFA.strategy.max = 10

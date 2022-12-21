@@ -28,7 +28,7 @@ ruby_block 'read dir content for configuration' do
   end
 end
 
-template "#{node['livy']['base_dir']}/conf/livy.conf" do
+template "#{node['livy']['conf_dir']}/livy.conf" do
   source "livy.conf.erb"
   owner node['livy']['user']
   group node['hops']['group']
@@ -42,7 +42,7 @@ template "#{node['livy']['base_dir']}/conf/livy.conf" do
 end
 
 livy_fqdn = consul_helper.get_service_fqdn("livy")
-template "#{node['livy']['base_dir']}/conf/livy-client.conf" do
+template "#{node['livy']['conf_dir']}/livy-client.conf" do
   source "livy-client.conf.erb"
   owner node['livy']['user']
   group node['hops']['group']
@@ -52,22 +52,22 @@ template "#{node['livy']['base_dir']}/conf/livy-client.conf" do
   })
 end
 
-template "#{node['livy']['base_dir']}/conf/log4j.properties" do
-  source "log4j.properties.erb"
+template "#{node['livy']['conf_dir']}/log4j2.properties" do
+  source "log4j2.properties.erb"
   owner node['livy']['user']
   group node['hops']['group']
   mode 0655
 end
 
 
-template "#{node['livy']['base_dir']}/conf/spark-blacklist.conf" do
+template "#{node['livy']['conf_dir']}/spark-blacklist.conf" do
   source "spark-blacklist.conf.erb"
   owner node['livy']['user']
   group node['hops']['group']
   mode 0655
 end
 
-template "#{node['livy']['base_dir']}/conf/livy-env.sh" do
+template "#{node['livy']['conf_dir']}/livy-env.sh" do
   source "livy-env.sh.erb"
   owner node['livy']['user']
   group node['hops']['group']

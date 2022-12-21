@@ -4,9 +4,6 @@ if ! /usr/bin/host <%= @rm_rpc_endpoint %> ; then
   exit 1
 fi
 
-export SPARK_HOME=<%= node['hadoop_spark']['base_dir'] %>
-export SPARK_CONF_DIR=<%= node['hadoop_spark']['base_dir'] %>/conf
-export HADOOP_CONF_DIR=<%= node['hops']['base_dir'] %>/etc/hadoop
 export HADOOP_HOME=<%= node['hops']['base_dir'] %>
 
 PID_FILE=<%= node['livy']['pid_file'] %>
@@ -22,7 +19,7 @@ fi
 HADOOP_CLASSPATH=$($HADOOP_HOME/bin/hadoop classpath)
 export CLASSPATH=$HADOOP_CLASSPATH:$CLASSPATH
 
-nohup <%= node['livy']['base_dir'] %>/bin/livy-server  2>&1 >> <%= node['livy']['log'] %> &
+nohup <%= node['livy']['base_dir'] %>/bin/livy-server &
 echo $! > $PID_FILE
 
 PID=`cat $PID_FILE`

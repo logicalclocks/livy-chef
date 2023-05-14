@@ -5,7 +5,7 @@ default['livy']['user']                    = node['install']['user'].empty? ? "l
 default['livy']['user_id']                 = '1518'
 default['livy']['user-home']               = "/home/#{node['livy']['user']}"
 
-default['livy']['version']                 = "0.8.3-incubating-SNAPSHOT-bin"
+default['livy']['version']                 = "0.8.4-incubating-SNAPSHOT-bin"
 default['livy']['url']                     = "#{node['download_url']}/apache-livy-#{node['livy']['version']}.zip"
 default['livy']['port']                    = "8998"
 default['livy']['dir']                     = node['install']['dir'].empty? ? "/srv" : node['install']['dir']

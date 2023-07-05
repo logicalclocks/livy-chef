@@ -4,7 +4,7 @@ maintainer_email "jdowling@kth.se"
 license          "Apache v2"
 description      'Installs/Configures Livy Server'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version          "3.3.0"
+version          "3.4.0"
 source_url       "https://github.com/hopshadoop/livy-chef"
 
 
